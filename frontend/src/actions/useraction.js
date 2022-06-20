@@ -130,12 +130,12 @@ export const clearerr=() =>  async (dispatch) => {
 
 export const logoutaction =  () =>  async (dispatch) => {
     try {
-        await axios.post(`/user/logout`);
+        await axios.get(`/user/logout`);
         dispatch({ type: LOGOUT_SUCCESS });
     } catch (error) {
         dispatch({
             type:LOGOUT_FAIL,
-            payload:error.response.data.message,
+            payload:error.payload.data.message,
         })
     }
 }

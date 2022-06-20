@@ -5,7 +5,7 @@ const cloudinary=require('cloudinary');
 const bodyparser=require('body-parser');
 const fileupload=require('express-fileupload')
 
-dotenv.config({path:"Backend/config/config.env"})
+dotenv.config({path:"config/config.env"})
 app.use(Express.json());
 var cookieParser = require('cookie-parser')
 app.use(cookieParser());

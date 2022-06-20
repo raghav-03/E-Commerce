@@ -43,7 +43,8 @@ const Product_detail = ({match}) => {
 
   const options = {
     size: "large",
-    value: product.ratings,
+    value: product.ratings ?? 0,
+    // value: product.ratings,
     readOnly: true,
     precision: 0.5,
   };
@@ -107,13 +108,16 @@ const Product_detail = ({match}) => {
             <div>
               <div className="detailsBlock-1">
                 <h2>{product.name}</h2>
+                {console.log(product)}
+                {/* {console.log(options.value)} */}
                 <p>Product # {product._id}</p>
               </div>
                <div className="detailsBlock-2">
                 <Rating {...options} />
+                {/* <Rating value='5'/> */}
                 <span className="detailsBlock-2-span">
                   {" "}
-                  ({product.numOfReviews} Reviews)
+                  ({product.noofreviews} Reviews)
                 </span>
               </div>
               

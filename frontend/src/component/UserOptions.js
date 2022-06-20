@@ -9,7 +9,7 @@ import ListAltIcon from "@material-ui/icons/ListAlt";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useHistory } from "react-router-dom";
 import { useAlert } from "react-alert";
-import {loginaction} from "../actions/useraction"
+import {logoutaction} from "../actions/useraction"
 import { useDispatch, useSelector } from "react-redux";
 
 const UserOptions = ({ user }) => {
@@ -19,7 +19,6 @@ const UserOptions = ({ user }) => {
   const history = useHistory();
   const alert = useAlert();
   const dispatch = useDispatch();
-
   const options = [
     { icon: <ListAltIcon />, name: "Orders", func: orders },
     { icon: <PersonIcon />, name: "Profile", func: account },
@@ -57,7 +56,7 @@ const UserOptions = ({ user }) => {
     history.push("/cart");
   }
   function logoutUser() {
-    dispatch(loginaction());
+    dispatch(logoutaction());
     alert.success("Logout Successfully");
   }
 

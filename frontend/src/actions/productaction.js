@@ -61,7 +61,6 @@ export const clearerr = () => async (dispatch) => {
 export const productdetailaction =  (id) =>  async (dispatch) => {
     try {
         const {data}= await axios.get(`/product/getone-product/${id}`);
-        console.log(data);
         dispatch({
             type:PRODUCT_SUCCESS,
             payload:data

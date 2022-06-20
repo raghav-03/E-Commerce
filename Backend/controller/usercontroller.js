@@ -56,6 +56,7 @@ exports.signup=async (req,res)=>{
 }
 exports.logout=async (req,res)=>{
     // res.clearCookie("token");
+    console.log("ee");
     res.cookie("token", null, {
         expires: new Date(Date.now()),
         httpOnly: true,
