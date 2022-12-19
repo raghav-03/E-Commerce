@@ -21,10 +21,10 @@ cloudinary.config({
     api_key: process.env.CLOUDINARY_API_KEY,
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-app.listen(process.env.Port,(e)=>{
+app.listen(process.env.PORT||3601,(e)=>{
     if(e){
         console.log("Error");
         return;
     }
-    console.log(`Server Running fine on port ${process.env.Port}`);
+    console.log(`Server Running fine on port ${process.env.PORT||3601}`);
 });

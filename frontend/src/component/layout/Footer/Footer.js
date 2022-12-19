@@ -27,7 +27,7 @@ const Footer = () => {
         <a href="">Facebook</a>
       </div>
     </footer>
-  );
+  )
 };
 
 export default Footer;

@@ -3,7 +3,7 @@ import { ReactNavbar } from "overlay-navbar";
 import logo from "../../../images/logo.png";
 
 const options = {
-  burgerColor:"white",
+  burgerColor:"black",
   burgerColorHover: "#eb4034",
   logo,
   logoWidth: "20vmax",
@@ -12,12 +12,12 @@ const options = {
   logoHoverColor: "#eb4034",
   link1Text: "Home",
   link2Text: "Products",
-  link3Text: "Contact",
-  link4Text: "About",
+  link3Text: "Cart",
+  link4Text: "Search",
   link1Url: "/",
   link2Url: "/products",
-  link3Url: "/contact",
-  link4Url: "/about",
+  link3Url: "/cart",
+  link4Url: "/search",
   link1Size: "1.3vmax",
   link1Color: "rgba(35, 35, 35,0.8)",
   nav1justifyContent: "flex-end",
