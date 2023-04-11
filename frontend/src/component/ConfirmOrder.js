@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import CheckoutSteps from "./CheckoutSteps";
 import { useSelector, useDispatch } from "react-redux";
 import MetaData from "./layout/MetaData";
@@ -7,15 +7,14 @@ import { Link } from "react-router-dom";
 import { Typography } from "@material-ui/core";
 import { useAlert } from "react-alert";
 import { createOrder, clearErrors } from "../actions/orderAction";
-
-
+import axios from "axios";
 const ConfirmOrder = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
   const { shippingInfo, cartItems } = useSelector((state) => state.cart);
   const { user } = useSelector((state) => state.user);
-  const { error,order } = useSelector((state) => state.newOrder);
+  const { error, order } = useSelector((state) => state.newOrder);
 
   const subtotal = cartItems.reduce(
     (acc, item) => acc + item.quantity * item.price,
@@ -30,28 +29,73 @@ const ConfirmOrder = ({ history }) => {
 
   const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
   const Order = {
-    shippinginfo:shippingInfo,
+    shippinginfo: shippingInfo,
     ordereditem: cartItems,
   };
-  const confirmorder = (e) => {
-    e.preventDefault();
-    const data = {
-      subtotal,
-      shippingCharges,
-      tax,
-      totalPrice,
-    };
 
-    sessionStorage.setItem("orderInfo", JSON.stringify(data));
-    dispatch(createOrder(Order));
-    history.push("/success");
-  };
+  // const confirmorder = (e) => {
+  //   e.preventDefault();
+  //   const data = {
+  //     subtotal,
+  //     shippingCharges,
+  //     tax,
+  //     totalPrice,
+  //   };
+
+  //   sessionStorage.setItem("orderInfo", JSON.stringify(data));
+  //   dispatch(createOrder(Order));
+  //   history.push("/success");
+  // };
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
   }, [dispatch, error, alert]);
+
+  const proceedToPayment = async () => {
+    const {
+      data: { key },
+    } = await axios.get("/payment/getkey");
+
+    const {
+      data: { order },
+    } = await axios.post("/payment/checkout", { amount: totalPrice });
+    const options = {
+      key,
+      amount: order.amount,
+      currency: "INR",
+      name: "Ecommerce",
+      description: "Payment for your order",
+      image: user.images.public_url,
+      order_id: order.id,
+      handler: function (response) {
+        Order.paymentInfo = {
+          id: response.razorpay_payment_id,
+          status: "succeeded",
+        };
+        dispatch(createOrder(Order));
+        history.push("/success");
+      },
+      // callback_url: "/payment/paymentverification",
+      prefill: {
+        name: user.name,
+        email: user.email,
+        contact: shippingInfo.phoneNumber,
+      },
+      notes: {
+        address,
+      },
+      theme: {
+        color: "#121212",
+      },
+    };
+    const razor = new window.Razorpay(options);
+    razor.open();
+    razor.on("payment.failed", (response) => {
+      alert.error("Payment failed");
+    });
+  };
   return (
     <Fragment>
       <MetaData title="Confirm Order" />
@@ -120,7 +164,7 @@ const ConfirmOrder = ({ history }) => {
               <span>₹{totalPrice}</span>
             </div>
 
-            <button onClick={confirmorder}>Confirm Order</button>
+            <button onClick={proceedToPayment}>Proceed To Payment</button>
           </div>
         </div>
       </div>
