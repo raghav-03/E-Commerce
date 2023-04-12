@@ -122,7 +122,7 @@ Start the Client
 
 ### Reset Password
 
-![](https://github.com/raghav-03/E-Commerce/blob/master/Screenshots/ChangingOrderStatus.jpeg)
+![](https://github.com/raghav-03/E-Commerce/blob/master/Screenshots/ResetPass.jpeg)
 
 ### My Orders
 
@@ -155,6 +155,10 @@ Start the Client
 ### Change Order Status
 
 ![](https://github.com/raghav-03/E-Commerce/blob/master/Screenshots/ChangingOrderStatus.jpeg)
+
+### Review Of a particular Product
+
+![](https://github.com/raghav-03/E-Commerce/blob/master/Screenshots/ReviewPageAdmin.jpeg)
 
 ## Made By
 
